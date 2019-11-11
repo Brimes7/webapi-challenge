@@ -24,9 +24,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "helmet": "^3.18.0",
+    "helmet": "^3.21.2",
     "knex": "^0.17.1",
-    "sqlite3": "^4.0.8"
+    "nodemon": "^1.19.4",
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {
     "knex-cleaner": "^1.2.1"

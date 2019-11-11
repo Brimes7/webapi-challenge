@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const actionsdb = require("../data/helpers/actionModel");
-const projectsdb = require("../data/helpers/projectModel");
+const projectsDB = require("../data/helpers/projectModel");
 
-// it is CRUD time
+//
 
 router.get("/", (req, res) => {
     console.log("inside the get at root PROJECTS")
-    projectsdb
+    projectsDB
     .get()
     .then(projects => {
         res.status(200).json(projects);
@@ -21,7 +21,7 @@ router.get("/:id", validateProjectId, (req, res) => {
     console.log("inside the get by ID PROJECTS")
     const id = req.params.id;
     console.log(id);
-    projectsdb
+    projectsDB
     .get(id)
     .then(project => {
         if(project) {
@@ -37,10 +37,10 @@ router.get("/:id", validateProjectId, (req, res) => {
     });
 });
 
-// CREATE
+// 
 
 router.post("/", (req, res) => {
-    projectsdb.insert(req.body)
+    projectsDB.insert(req.body)
         .then(project => {
             res.status(201).json(project);
         })
@@ -52,7 +52,7 @@ router.post("/", (req, res) => {
 router.delete("/:id", validateProjectId, (req, res) => {
     const id = req.params.id;
     console.log(id);
-        projectsdb
+        projectsDB
         .remove(id)
         then(response => {
             res.status(200).json({
@@ -70,7 +70,7 @@ router.delete("/:id", validateProjectId, (req, res) => {
 router.put("/:id", validateProjectId, (req, res) => {
     const id = req.params.id;
     console.log(id);
-        projectsdb
+        projectsDB
         .update(id, req.body)
         .then(response => {
             res.status(200).json(
@@ -85,7 +85,7 @@ router.put("/:id", validateProjectId, (req, res) => {
 });
 
 router.get("/id/actions", (req, res) => {
-    projectsdb.getProjectActions(req,params.id)
+    projectsDB.getProjectActions(req,params.id)
     .then(actions => {
         if(actions) {
             res.status(200).json(actions);
@@ -100,23 +100,23 @@ router.get("/id/actions", (req, res) => {
     });
 });
 
-function validateProjectId (req, res, next) {
-  const id = req.params.id;
-  projectsdb
-    .get(id)
-    .then(project => {
-      if (project) {
-        req.project = project;
-        next();
-      } else {
-        res.status(400).json({ message: 'Invalid Project ID' });
-      }
-    })
-    .catch(error => {
-      res
-        .status(500)
-        .json({ message: 'error in the validation by id function' });
-    });
+    function validateProjectId (req, res, next) {
+    const id = req.params.id;
+    projectsDB
+        .get(id)
+        .then(project => {
+        if (project) {
+            req.project = project;
+            next();
+        } else {
+            res.status(400).json({ message: 'Invalid Project ID' });
+        }
+        })
+        .catch(error => {
+        res
+            .status(500)
+            .json({ message: 'error in the validation by id function' });
+        });
 }
 
 module.exports = router;
