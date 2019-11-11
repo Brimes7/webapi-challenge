@@ -5,7 +5,7 @@ const projectRoute = require('./routers/projectRouter');
 const actionsRoute = require('./routers/actionRouter');
 
 const server = express();
-const PORT = 9000;
+const PORT = 7000;
 
 
 // MIDDLEWARE:

@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const actionsdb = require("../data/helpers/actionModel");
-const projectsDB = require("../data/helpers/projectModel");
+const projectsdb = require("../data/helpers/projectModel");
 
-//
+// it is CRUD time
 
 router.get("/", (req, res) => {
     console.log("inside the get at root PROJECTS")
-    projectsDB
+    projectsdb
     .get()
     .then(projects => {
         res.status(200).json(projects);
@@ -21,7 +21,7 @@ router.get("/:id", validateProjectId, (req, res) => {
     console.log("inside the get by ID PROJECTS")
     const id = req.params.id;
     console.log(id);
-    projectsDB
+    projectsdb
     .get(id)
     .then(project => {
         if(project) {
@@ -37,10 +37,10 @@ router.get("/:id", validateProjectId, (req, res) => {
     });
 });
 
-// 
+// CREATE
 
 router.post("/", (req, res) => {
-    projectsDB.insert(req.body)
+    projectsdb.insert(req.body)
         .then(project => {
             res.status(201).json(project);
         })
@@ -52,7 +52,7 @@ router.post("/", (req, res) => {
 router.delete("/:id", validateProjectId, (req, res) => {
     const id = req.params.id;
     console.log(id);
-        projectsDB
+        projectsdb
         .remove(id)
         then(response => {
             res.status(200).json({
@@ -70,7 +70,7 @@ router.delete("/:id", validateProjectId, (req, res) => {
 router.put("/:id", validateProjectId, (req, res) => {
     const id = req.params.id;
     console.log(id);
-        projectsDB
+        projectsdb
         .update(id, req.body)
         .then(response => {
             res.status(200).json(
@@ -85,7 +85,7 @@ router.put("/:id", validateProjectId, (req, res) => {
 });
 
 router.get("/id/actions", (req, res) => {
-    projectsDB.getProjectActions(req,params.id)
+    projectsdb.getProjectActions(req,params.id)
     .then(actions => {
         if(actions) {
             res.status(200).json(actions);
@@ -102,7 +102,7 @@ router.get("/id/actions", (req, res) => {
 
     function validateProjectId (req, res, next) {
     const id = req.params.id;
-    projectsDB
+    projectsdb
         .get(id)
         .then(project => {
         if (project) {
@@ -117,6 +117,6 @@ router.get("/id/actions", (req, res) => {
             .status(500)
             .json({ message: 'error in the validation by id function' });
         });
-}
+    }
 
 module.exports = router;

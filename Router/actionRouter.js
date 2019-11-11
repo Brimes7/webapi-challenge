@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
         })
 })
 
-// delete actions without terminating proj
+// delete actions 
 
 router.delete('/:id', (req, res) => {
     const id = req.params.id;
